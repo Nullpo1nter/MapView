@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.parkingmap.ParkingSearchActivity">
+
+    <include layout="@layout/map_view" />
+
+    <ImageButton
+        android:id="@+id/search_page_goback"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/goback"
+        android:scaleType="fitCenter"
+        android:background="@color/colorTransparent"/>
+
+    <ImageButton
+        android:id="@+id/search_page_location"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/search_page_scrollhide"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/location"
+        android:scaleType="fitXY"
+        android:background="@color/colorTransparent"/>
+
+    <ImageButton
+        android:id="@+id/search_page_scrollhide"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:src="@drawable/hide"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="200dp"/>
+
+    <ScrollView
+        android:id="@+id/search_page_scrollview"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/park_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/search_page_parkslot_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:background="@drawable/textview_border"
+                android:textSize="20dp"
+                android:text="停车场信息1"
+                android:textColor="@color/colorBlack"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/search_page_parkslot_info1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:background="@drawable/textview_border"
+                android:textSize="20dp"
+                android:text="停车场信息2"
+                android:textColor="@color/colorBlack"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
