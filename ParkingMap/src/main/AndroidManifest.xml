@@ -20,6 +20,7 @@
         <activity android:name=".RoutePageActivity"></activity>
         <activity android:name=".NavigatePageActivity"></activity>
         <activity android:name=".SearchPageActivity"></activity>
+        <activity android:name=".ParklotinfoPageActivity"></activity>
     </application>
 
 </manifest>

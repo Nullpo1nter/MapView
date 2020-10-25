@@ -4,10 +4,8 @@
     android:layout_height="match_parent">
 
 
-    <com.onlylemi.mapview.library.MapView
-        android:id="@+id/route_page_mapview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <include layout="@layout/map_view" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

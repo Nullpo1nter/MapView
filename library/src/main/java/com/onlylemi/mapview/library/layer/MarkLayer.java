@@ -49,7 +49,7 @@ public class MarkLayer extends MapBaseLayer {
     private void initLayer() {
         radiusMark = setValue(10f);
 
-        bmpMark = BitmapFactory.decodeResource(mapView.getResources(), R.mipmap.mark);
+        bmpMark = BitmapFactory.decodeResource(mapView.getResources(), R.mipmap.mark_touch);
         bmpMarkTouch = BitmapFactory.decodeResource(mapView.getResources(), R.mipmap.mark_touch);
 
         paint = new Paint();
