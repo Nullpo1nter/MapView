@@ -1,56 +1,70 @@
 package com.example.parkingmap;
 
-import android.content.res.AssetManager;
-import android.graphics.PointF;
-
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-class ParkingLotsInfo{
-    private int remain;
-    static List<ParkingLotInfo> parkingLots;
+class ParkingLotInfo{
+    public static String name;
+    public static String location;
+    public static int floors;
+    public static int remain;
+    public static String[] floorsName;
+    static List<LotInfo> lotList;
 
-    public static ParkingLotInfo getRandomLot(BufferedReader bfr) throws IOException {
-        ParkingLotsInfo.init(bfr);
-        int n = new Random().nextInt(37);
-        while (parkingLots.get(n).hasCar == 1){
-            n = new Random().nextInt(37);
+    public static Object[] getRandomLot(BufferedReader bfr) throws IOException {
+        ParkingLotInfo.init(bfr);
+        int n = new Random().nextInt(37*floors);
+        while (lotList.get(n).hasCar == 1){
+            n = new Random().nextInt(37*floors);
         }
-        return parkingLots.get(n);
+        return new Object[]{floorsName, lotList.get(n)};
     }
 
     public static void init(BufferedReader bfr) throws IOException {
-        parkingLots = new ArrayList<>();
+        lotList = new ArrayList<>();
         String line = "";
+        while ((line = bfr.readLine()) != null && (line.split(" ")[0]).equals("#")){
+//            System.out.println("文件读取1：" + line);
+        }
+//        System.out.println("文件读取2："+line);
+        String[] contents = line.split(", ");
+        name = contents[0];
+        location = contents[1];
+        floors = Integer.parseInt(contents[2]);
+        remain = Integer.parseInt(contents[3]);
+        floorsName = new String[floors];
+        int i = -1;
         int number;
         float x, y;
         int hasCar;
-        ParkingLotInfo info;
+        LotInfo lot;
         while ((line = bfr.readLine()) != null) {
-            System.out.println(line);
-            String[] contents = line.split(", ");
-            number = Integer.parseInt(contents[0]);
-            x = Float.parseFloat(contents[1]);
-            y = Float.parseFloat(contents[2]);
-            hasCar = Integer.parseInt(contents[3]);
-            info = new ParkingLotInfo(number, x, y, hasCar);
-            parkingLots.add(info);
+//            System.out.println("文件读取3："+line);
+            contents = line.split(", ");
+            if (i < 0 || !floorsName[i].equals(contents[0])){
+                i++;
+                floorsName[i] = contents[0];
+            }
+            number = Integer.parseInt(contents[1]);
+            x = Float.parseFloat(contents[2]);
+            y = Float.parseFloat(contents[3]);
+            hasCar = Integer.parseInt(contents[4]);
+            lot = new LotInfo(contents[0], number, x, y, hasCar);
+            lotList.add(lot);
         }
     }
 }
-class ParkingLotInfo {
+class LotInfo {
+    public String floor;
     public int number;
     public float x, y;
     int hasCar;
-    public ParkingLotInfo(int number, float x, float y, int hasCar){
+    public LotInfo(String floor, int number, float x, float y, int hasCar){
+        this.floor = floor;
         this.number = number;
         this.x = x;
         this.y = y;

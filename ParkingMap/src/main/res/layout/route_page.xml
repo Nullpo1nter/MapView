@@ -36,7 +36,8 @@
                 android:weightSum="7"
                 android:layout_marginEnd="10dp"
                 android:background="#F8F8F8"
-                android:layout_width="0dp">
+                android:layout_width="0dp"
+                android:layout_marginRight="10dp">
                 <ImageView
                     android:layout_height="60dp"
                     android:layout_width="0dp"
@@ -86,14 +87,15 @@
         </LinearLayout>
         <ImageButton
             android:id="@+id/route_page_location"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_above="@+id/route_page_bottommenu"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/location"
             android:scaleType="fitXY"
-            android:background="@color/colorTransparent"/>
+            android:background="@color/colorTransparent"
+            android:layout_marginLeft="10dp" />
         <RelativeLayout
             android:id="@+id/route_page_bottommenu"
             android:layout_width="match_parent"
@@ -108,12 +110,13 @@
                 android:textSize="20dp"
                 android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
-                android:layout_marginStart="15dp"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp" />
 
             <Button
                 android:id="@+id/booked_page_navigate"
                 android:layout_width="150dp"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/button_circle_shape_blue"
                 android:text="立即导航"

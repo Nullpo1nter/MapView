@@ -35,7 +35,7 @@ public class MarkLayerTestActivity extends AppCompatActivity {
         mapView.setMapViewListener(new MapViewListener() {
             @Override
             public void onMapLoadSuccess() {
-                List<PointF> marks = TestData.getMarks();
+                List<PointF> marks = TestData.getNodesList();
                 final List<String> marksName = TestData.getMarksName();
                 markLayer = new MarkLayer(mapView, marks, marksName);
                 markLayer.setMarkIsClickListener(new MarkLayer.MarkIsClickListener() {

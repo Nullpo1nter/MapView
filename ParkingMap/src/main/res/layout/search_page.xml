@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.parkingmap.ParkingSearchActivity">
+    android:layout_height="match_parent">
 
     <include layout="@layout/map_view" />
 
@@ -17,18 +16,20 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/goback"
         android:scaleType="fitCenter"
-        android:background="@color/colorTransparent"/>
+        android:background="@color/colorTransparent"
+        android:layout_marginLeft="10dp" />
 
     <ImageButton
         android:id="@+id/search_page_location"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_above="@+id/search_page_scrollhide"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
         android:src="@drawable/location"
         android:scaleType="fitXY"
-        android:background="@color/colorTransparent"/>
+        android:background="@color/colorTransparent"
+        android:layout_marginLeft="10dp" />
 
     <ImageButton
         android:id="@+id/search_page_scrollhide"

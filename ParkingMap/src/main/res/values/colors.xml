@@ -8,4 +8,5 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorBlue">#6699ff</color>
     <color name="colorGray">#999999</color>
+    <color name="whiteHalfTran">#80FFFFFF</color>
 </resources>

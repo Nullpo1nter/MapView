@@ -16,8 +16,9 @@
             android:layout_marginTop="10dp"
             android:src="@drawable/goback"
             android:scaleType="fitCenter"
-            android:background="@color/colorTransparent"/>
-        <LinearLayout
+            android:background="@color/colorTransparent"
+            android:layout_marginLeft="10dp" />
+        <RelativeLayout
             android:id="@+id/booked_page_menu"
             android:layout_width="match_parent"
             android:layout_height="130dp"
@@ -29,52 +30,73 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="车位号"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textColor="@color/colorBlack"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp" />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:weightSum="2">
+                android:layout_marginBottom="10dp"
+                android:weightSum="2"
+                android:layout_alignParentBottom="true">
                 <Button
                     android:layout_width="150dp"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_circle_shape_gray"
                     android:text="取消预定"
                     android:textSize="20dp"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginLeft="15dp" />
                 <Button
                     android:id="@+id/booked_page_route"
                     android:layout_width="150dp"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="15dp"
                     android:layout_marginStart="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_circle_shape_blue"
                     android:text="路线"
                     android:textSize="20dp"
-                    android:textColor="@color/colorWhite"/>
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="50dp" />
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageButton
             android:id="@+id/booked_page_location"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_above="@+id/booked_page_menu"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/location"
             android:scaleType="fitXY"
-            android:background="@color/colorTransparent"/>
+            android:background="@color/colorTransparent"
+            android:layout_marginLeft="10dp" />
 <!--        关于楼层的信息显示在activity里动态创建Button-->
+        <ScrollView
+            android:id="@+id/booked_page_scrollView"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_above="@+id/booked_page_location"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp">
+            <LinearLayout
+                android:id="@+id/booked_page_scrollView_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
     </RelativeLayout>
 
 </FrameLayout>

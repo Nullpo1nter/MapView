@@ -46,17 +46,23 @@ public class ParklotinfoPageActivity extends AppCompatActivity {
             }
             BufferedReader bfr =new BufferedReader(isr);
 
-            ParkingLotInfo freeLot = null;
+            Object[] messages = null;
             try {
-                freeLot = ParkingLotsInfo.getRandomLot(bfr);
+                messages = ParkingLotInfo.getRandomLot(bfr);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Intent intent = new Intent(ParklotinfoPageActivity.this, BookedPageActivity.class);
+            String[] floorsName = (String[]) messages[0];
+            LotInfo freeLot = (LotInfo) messages[1];
+            intent.putExtra("floorsNum", floorsName.length);
+            for (int i = 0; i < floorsName.length; i++){
+                intent.putExtra("floorName"+i, floorsName[i]);
+            }
+            intent.putExtra("floor", freeLot.floor);
             intent.putExtra("number", freeLot.number);
             intent.putExtra("x", freeLot.x);
             intent.putExtra("y", freeLot.y);
-            System.out.println(freeLot.number);
             startActivity(intent);
         });
     }
