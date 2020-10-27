@@ -28,6 +28,7 @@
             android:orientation="vertical"
             android:background="@color/colorWhite">
             <TextView
+                android:id="@+id/parklotinfo_page_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="停车场信息"

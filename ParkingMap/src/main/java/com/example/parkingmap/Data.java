@@ -15,13 +15,13 @@ class ParkingLotInfo{
     public static String[] floorsName;
     static List<LotInfo> lotList;
 
-    public static Object[] getRandomLot(BufferedReader bfr) throws IOException {
-        ParkingLotInfo.init(bfr);
+    public static LotInfo getRandomLot(){
+//        ParkingLotInfo.init(bfr);
         int n = new Random().nextInt(37*floors);
         while (lotList.get(n).hasCar == 1){
             n = new Random().nextInt(37*floors);
         }
-        return new Object[]{floorsName, lotList.get(n)};
+        return lotList.get(n);
     }
 
     public static void init(BufferedReader bfr) throws IOException {
