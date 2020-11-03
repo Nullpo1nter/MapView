@@ -34,6 +34,7 @@ public class BookedPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booked_page);
         Intent intent = getIntent();
+        String parklotName = intent.getStringExtra("parklotName");
         int floorsNum = intent.getIntExtra("floorsNum", 1);
         String[] floorsName = new String[floorsNum];
         linearLayout = findViewById(R.id.booked_page_scrollView_linearLayout);
@@ -44,10 +45,8 @@ public class BookedPageActivity extends AppCompatActivity {
             bt.setText(floorsName[i]);
             bt.setWidth(linearLayout.getWidth());
             if (floorsName[i].equals(floor)){
-                System.out.println("************equals");
                 bt.setBackgroundColor(Color.parseColor("#6699FF"));
             }else{
-                System.out.println("************not equal");
                 bt.setBackgroundColor(Color.parseColor("#F5F5F5"));
                 bt.setTextColor(Color.parseColor("#000000"));
             }
@@ -68,6 +67,9 @@ public class BookedPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(BookedPageActivity.this, RoutePageActivity.class);
+                intent.putExtra("targetX", posX);
+                intent.putExtra("targetY", posY);
+                intent.putExtra("targetPlace", parklotName+floor+"层"+lotNum+"号停车位");
                 startActivity(intent);
             }
         });

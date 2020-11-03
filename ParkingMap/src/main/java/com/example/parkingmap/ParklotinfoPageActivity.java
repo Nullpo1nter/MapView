@@ -51,6 +51,7 @@ public class ParklotinfoPageActivity extends AppCompatActivity {
         book.setOnClickListener(v -> {
             LotInfo freeLot = ParkingLotInfo.getRandomLot();
             Intent intent = new Intent(ParklotinfoPageActivity.this, BookedPageActivity.class);
+            intent.putExtra("parklotName", ParkingLotInfo.name);
             intent.putExtra("floorsNum", ParkingLotInfo.floors);
             for (int i = 0; i < ParkingLotInfo.floors; i++){
                 intent.putExtra("floorName"+i, ParkingLotInfo.floorsName[i]);

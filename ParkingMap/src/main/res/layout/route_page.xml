@@ -53,6 +53,7 @@
                     android:layout_width="0dp"
                     android:weightSum="2">
                     <EditText
+                        android:id="@+id/route_page_editText_start"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -65,6 +66,7 @@
                         android:layout_height="1dp"
                         android:background="@color/colorGray" />
                     <EditText
+                        android:id="@+id/route_page_editText_end"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
