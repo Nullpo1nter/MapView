@@ -279,6 +279,22 @@ public final class MapUtils {
         return getShortestPathBetweenTwoPoints(nodes.size() - 1, target, nodes, nodesContact);
     }
 
+    private static void addPointToList(PointF point, List<PointF> nodes, List<PointF> nodesContact){
+        float min = INF;
+        float dis;
+        int pos = 0;
+        for (PointF contact : nodesContact){
+            PointF node = nodes.get((int)contact.x);
+            dis = MapMath.getDistanceBetweenTwoPoints(point, node);
+            if (dis < min){
+                min = dis;
+                pos = (int) contact.x;
+            }
+        }
+        nodes.add(point);
+        nodesContact.add(new PointF(pos, nodes.size()-1));
+    }
+
     /**
      * add point to list
      *
@@ -286,32 +302,45 @@ public final class MapUtils {
      * @param nodes
      * @param nodesContact
      */
-    private static void addPointToList(PointF point, List<PointF> nodes, List<PointF>
-            nodesContact) {
-        if (point != null) {
-            PointF pV = null;
-            int po1 = 0, po2 = 0;
-            float min1 = INF;
-            for (int i = 0; i < nodesContact.size() - 1; i++) {
-                PointF p1 = nodes.get((int) nodesContact.get(i).x);
-                PointF p2 = nodes.get((int) nodesContact.get(i).y);
-                if (!MapMath.isObtuseAnglePointAndLine(point, p1, p2)) {
-                    float minDis = MapMath.getDistanceFromPointToLine(point, p1, p2);
-                    if (min1 > minDis) {
-                        pV = MapMath.getIntersectionCoordinatesFromPointToLine(point, p1, p2);
-                        min1 = minDis;
-                        po1 = (int) nodesContact.get(i).x;
-                        po2 = (int) nodesContact.get(i).y;
-                    }
-                }
-            }
-            // get intersection
-            nodes.add(pV);
-            //Log.i(TAG, "node=" + (nodes.size() - 1) + ", po1=" + po1 + ", po2=" + po2);
-            nodesContact.add(new PointF(po1, nodes.size() - 1));
-            nodesContact.add(new PointF(po2, nodes.size() - 1));
-        }
-    }
+    //找到距离point最近的一个可能通行的点
+//    private static void addPointToList(PointF point, List<PointF> nodes, List<PointF>
+//            nodesContact) {
+//        if (point != null) {
+//            PointF pV = point;
+//            int po1 = 0, po2 = 0;
+//            float min1 = INF;
+//            for (int i = 0; i < nodesContact.size() - 1; i++) {
+//                PointF p1 = nodes.get((int) nodesContact.get(i).x);
+//                PointF p2 = nodes.get((int) nodesContact.get(i).y);
+//                //point和另外两个点形成三角形
+//                //如果除了point所在的角的两个角都是锐角或直角
+//                if (!MapMath.isObtuseAnglePointAndLine(point, p1, p2)) {
+//                    //minDis是point到对边的垂直距离
+//                    float minDis = MapMath.getDistanceFromPointToLine(point, p1, p2);
+//                    if (min1 > minDis) {
+//                        System.out.println("*************************");
+//                        System.out.print("更新点，从" + pV.x +", " + pV.y + "到");
+//                        //pv是point到对边的垂足
+//                        pV = MapMath.getIntersectionCoordinatesFromPointToLine(point, p1, p2);
+//                        System.out.println( pV.x +", " + pV.y);
+//                        System.out.println("三角形的另外两个点：" + p1.x + ", " + p1.y + ",, " + p2.x + ", " + p2.y);
+//                        System.out.println("*************************");
+//                        min1 = minDis;
+//                        po1 = (int) nodesContact.get(i).x;
+//                        po2 = (int) nodesContact.get(i).y;
+//                    }
+//                }
+//            }
+//            // get intersection
+//            nodes.add(pV);
+//            System.out.println("********************************");
+//            System.out.println("add node: " + pV.x + ", " + pV.y);
+//            System.out.println("********************************");
+//            //Log.i(TAG, "node=" + (nodes.size() - 1) + ", po1=" + po1 + ", po2=" + po2);
+//            nodesContact.add(new PointF(po1, nodes.size() - 1));
+//            nodesContact.add(new PointF(po2, nodes.size() - 1));
+//        }
+//    }
 
     /**
      * bitmap to picture

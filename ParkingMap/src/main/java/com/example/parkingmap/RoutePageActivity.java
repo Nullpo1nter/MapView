@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.onlylemi.mapview.library.MapView;
 import com.onlylemi.mapview.library.MapViewListener;
+import com.onlylemi.mapview.library.layer.LocationLayer;
 import com.onlylemi.mapview.library.layer.MarkLayer;
 import com.onlylemi.mapview.library.layer.RouteLayer;
 import com.onlylemi.mapview.library.utils.MapUtils;
@@ -25,11 +27,14 @@ import java.util.List;
 public class RoutePageActivity extends AppCompatActivity {
     private ImageButton goback;
     private Button navigate;
+    private ImageButton location;
     private MapView mapView;
     private RouteLayer routeLayer;
     private MarkLayer markLayer;
+    private LocationLayer locationLayer;
     private EditText start;
     private EditText end;
+    private PointF userLocation;//相对mapview的x y
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class RoutePageActivity extends AppCompatActivity {
         end = findViewById(R.id.route_page_editText_end);
         start.setText("我的位置");
         end.setText(targetPlace);
+        userLocation = new PointF(450, 90);
         mapView = findViewById(R.id.mapview);
         Bitmap bitmap = null;
         try {
@@ -50,44 +56,39 @@ public class RoutePageActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mapView.loadMap(bitmap);
+
         TestData.init();
         MapUtils.init(TestData.nodeList.size(), TestData.nodesContactList.size());
         mapView.setMapViewListener(new MapViewListener() {
             @Override
             public void onMapLoadSuccess() {
+                locationLayer = new LocationLayer(mapView, userLocation);
+                locationLayer.setOpenCompass(true);
+                locationLayer.setCompassIndicatorCircleRotateDegree(60);
+                locationLayer.setCompassIndicatorArrowRotateDegree(-30);
+                mapView.addLayer(locationLayer);
                 routeLayer = new RouteLayer(mapView);
-//                mapView.addLayer(routeLayer);
-
-//                markLayer = new MarkLayer(mapView, TestData.marks, TestData.marksName);
-//                mapView.addLayer(markLayer);
-//                markLayer.setMarkIsClickListener(new MarkLayer.MarkIsClickListener() {
-//                    @Override
-//                    public void markIsClick(int num) {
-//                        PointF target = new PointF(TestData.marks.get(num).x, TestData.marks.get(num).y);
-//                        List<Integer> routeList = MapUtils.getShortestDistanceBetweenTwoPoints
-//                                (TestData.marks.get(39), target, TestData.nodeList, TestData.nodesContactList);
-//                        routeLayer.setNodeList(TestData.nodeList);
-//                        routeLayer.setRouteList(routeList);
-//                        mapView.refresh();
-//                    }
-//                });
-//                mapView.refresh();
-//                System.out.println("***********************"+TestData.marks.size()+"*************");
+                mapView.addLayer(routeLayer);
                 PointF target = new PointF(targetX,targetY);
-//                System.out.println("***********************"+target.x+"*************");
                 List<Integer> routeList = MapUtils.getShortestDistanceBetweenTwoPoints
-                        (TestData.nodeList.get(66), target, TestData.nodeList, TestData.nodesContactList);
+                        (userLocation, target, TestData.nodeList, TestData.nodesContactList);
                 routeLayer.setNodeList(TestData.nodeList);
                 routeLayer.setRouteList(routeList);
-                mapView.addLayer(routeLayer);
-                mapView.refresh();
             }
 
             @Override
             public void onMapLoadFail() {
             }
 
+        });
+        mapView.loadMap(bitmap);
+        location = findViewById(R.id.route_page_location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapView.mapCenterWithPoint(userLocation.x, userLocation.y);
+                mapView.refresh();
+            }
         });
         goback = findViewById(R.id.route_page_goback);
         goback.setOnClickListener(new View.OnClickListener(){
