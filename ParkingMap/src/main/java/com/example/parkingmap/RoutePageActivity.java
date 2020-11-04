@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,12 +29,15 @@ public class RoutePageActivity extends AppCompatActivity {
     private ImageButton goback;
     private Button navigate;
     private ImageButton location;
+    private ImageButton switchSE;
     private MapView mapView;
     private RouteLayer routeLayer;
     private MarkLayer markLayer;
     private LocationLayer locationLayer;
-    private EditText start;
-    private EditText end;
+    private EditText startText;
+    private EditText endText;
+    private PointF startPos;
+    private PointF endPos;
     private PointF userLocation;//相对mapview的x y
 
     @Override
@@ -44,11 +48,13 @@ public class RoutePageActivity extends AppCompatActivity {
         float targetX = intent.getFloatExtra("targetX", 0);
         float targetY = intent.getFloatExtra("targetY", 0);
         String targetPlace = intent.getStringExtra("targetPlace");
-        start = findViewById(R.id.route_page_editText_start);
-        end = findViewById(R.id.route_page_editText_end);
-        start.setText("我的位置");
-        end.setText(targetPlace);
+        startText = findViewById(R.id.route_page_editText_start);
+        endText = findViewById(R.id.route_page_editText_end);
+        startText.setText("我的位置");
+        endText.setText(targetPlace);
         userLocation = new PointF(450, 90);
+        startPos = userLocation;
+        endPos = new PointF(targetX,targetY);
         mapView = findViewById(R.id.mapview);
         Bitmap bitmap = null;
         try {
@@ -69,9 +75,8 @@ public class RoutePageActivity extends AppCompatActivity {
                 mapView.addLayer(locationLayer);
                 routeLayer = new RouteLayer(mapView);
                 mapView.addLayer(routeLayer);
-                PointF target = new PointF(targetX,targetY);
                 List<Integer> routeList = MapUtils.getShortestDistanceBetweenTwoPoints
-                        (userLocation, target, TestData.nodeList, TestData.nodesContactList);
+                        (startPos, endPos, TestData.nodeList, TestData.nodesContactList);
                 routeLayer.setNodeList(TestData.nodeList);
                 routeLayer.setRouteList(routeList);
             }
@@ -87,6 +92,23 @@ public class RoutePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mapView.mapCenterWithPoint(userLocation.x, userLocation.y);
+                mapView.refresh();
+            }
+        });
+        switchSE = findViewById(R.id.route_page_switchSE);
+        switchSE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Editable temp = startText.getText();
+                startText.setText(endText.getText());
+                endText.setText(temp);
+                PointF temp1 = startPos;
+                startPos = endPos;
+                endPos = temp1;
+                List<Integer> routeList = MapUtils.getShortestDistanceBetweenTwoPoints
+                        (startPos, endPos, TestData.nodeList, TestData.nodesContactList);
+                routeLayer.setNodeList(TestData.nodeList);
+                routeLayer.setRouteList(routeList);
                 mapView.refresh();
             }
         });
