@@ -89,12 +89,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp">
+
             <LinearLayout
                 android:id="@+id/booked_page_scrollView_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </ScrollView>
 
     </RelativeLayout>

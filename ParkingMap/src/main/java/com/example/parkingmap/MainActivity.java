@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private TextView textView;
+    private TextView textView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this, SearchPageActivity.class);
+                startActivity(intent);
+            }
+        });
+        textView2 = findViewById(R.id.textView2);
+        textView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, OutDoorMapActivity.class);
                 startActivity(intent);
             }
         });

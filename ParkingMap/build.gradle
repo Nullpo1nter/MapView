@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId 'com.onlylemi.parkingmap'
+        applicationId 'com.example.parkingmap'
         minSdkVersion 15
         targetSdkVersion 30
         versionCode 1
@@ -36,4 +36,5 @@ dependencies {
     implementation 'com.android.support:support-v4:23.0.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

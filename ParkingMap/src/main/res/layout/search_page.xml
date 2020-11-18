@@ -55,27 +55,27 @@
             android:background="@color/colorWhite"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/search_page_parkslot_info"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:clickable="true"
-                android:background="@drawable/textview_border"
-                android:textSize="20dp"
-                android:text="停车场信息1"
-                android:textColor="@color/colorBlack"
-                android:gravity="center_vertical"/>
+<!--            <TextView-->
+<!--                android:id="@+id/search_page_parkslot_info"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:clickable="true"-->
+<!--                android:background="@drawable/textview_border"-->
+<!--                android:textSize="20dp"-->
+<!--                android:text="停车场信息1"-->
+<!--                android:textColor="@color/colorBlack"-->
+<!--                android:gravity="center_vertical"/>-->
 
-            <TextView
-                android:id="@+id/search_page_parkslot_info1"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:clickable="true"
-                android:background="@drawable/textview_border"
-                android:textSize="20dp"
-                android:text="停车场信息2"
-                android:textColor="@color/colorBlack"
-                android:gravity="center_vertical"/>
+<!--            <TextView-->
+<!--                android:id="@+id/search_page_parkslot_info1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:clickable="true"-->
+<!--                android:background="@drawable/textview_border"-->
+<!--                android:textSize="20dp"-->
+<!--                android:text="停车场信息2"-->
+<!--                android:textColor="@color/colorBlack"-->
+<!--                android:gravity="center_vertical"/>-->
         </LinearLayout>
     </ScrollView>
 

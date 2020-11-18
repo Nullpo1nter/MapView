@@ -1,43 +1,85 @@
 package com.example.parkingmap;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.MyLocationStyle;
 
 import android.support.v7.app.AppCompatActivity;
 
-import com.onlylemi.mapview.library.MapView;
-import com.onlylemi.mapview.library.MapViewListener;
-
-import java.io.IOException;
-import java.util.Random;
-
-import static android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-import static android.view.View.SYSTEM_UI_FLAG_IMMERSIVE;
+import java.util.ArrayList;
 
 public class SearchPageActivity extends AppCompatActivity {
 
     private static final String TAG = "ParkingSearchActivity";
 
-    private MapView mapView;
     private TextView textView0;
     private ScrollView scrollView;
     private ImageButton scrollhide;
+    private LinearLayout info;
 
+    private double posX;
+    private double posY;
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                //可在其中解析amapLocation获取相应内容。
+                    posX = amapLocation.getLongitude();
+                    posY = amapLocation.getLatitude();
+                    Log.d("",amapLocation.getLongitude() + " " + amapLocation.getLatitude());
+                }else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError","location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+    ArrayList<String> parkingLotName = new ArrayList<>();
+    ArrayList<Double> parkingLotX = new ArrayList<>();
+    ArrayList<Double> parkingLotY = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //hideNavigationBar(this);
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setInterval(1000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
         scrollView = findViewById(R.id.search_page_scrollview);
@@ -51,13 +93,13 @@ public class SearchPageActivity extends AppCompatActivity {
                 scrollhide.setY(height-scrollhide.getHeight());
             }
         });
-        textView0 = findViewById(R.id.search_page_parkslot_info);
-        textView0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SearchPageActivity.this, ParklotinfoPageActivity.class);
-                startActivity(intent);
-            }
-        });
+//        textView0 = findViewById(R.id.search_page_parkslot_info);
+//        textView0.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(SearchPageActivity.this, ParklotinfoPageActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
