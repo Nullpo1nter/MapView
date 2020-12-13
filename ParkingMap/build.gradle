@@ -32,8 +32,12 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.13.1'
     implementation project(':library')
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:23.0.0'
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:23.0.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:27.0.2'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -15,15 +15,21 @@
             android:id="@+id/search"
             android:layout_width="150dp"
             android:layout_height="75dp"
-            android:layout_marginStart="125dp"
-            android:layout_marginLeft="125dp"
-            android:layout_marginTop="550dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="100dp"
             android:background="@drawable/button_circle_shape_blue"
             android:text="查找附近停车场"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/naviStart"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/button_circle_shape_blue"
+            android:text="开始导航"
+            android:visibility="invisible" />
     </com.amap.api.maps.MapView>
-
-
-
 
 </LinearLayout>

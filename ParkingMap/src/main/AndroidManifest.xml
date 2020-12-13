@@ -53,6 +53,7 @@
         <activity android:name=".SearchPageActivity"></activity>
         <activity android:name=".ParklotinfoPageActivity"></activity>
         <activity android:name=".OutDoorMapActivity"></activity>
+        <activity android:name=".NavigateActivity"></activity>
     </application>
 
 </manifest>

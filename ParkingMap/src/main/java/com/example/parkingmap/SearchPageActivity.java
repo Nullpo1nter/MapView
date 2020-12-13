@@ -1,11 +1,15 @@
 package com.example.parkingmap;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -29,6 +33,7 @@ public class SearchPageActivity extends AppCompatActivity {
     private static final String TAG = "ParkingSearchActivity";
 
     private TextView textView0;
+    private ImageButton goback;
     private ScrollView scrollView;
     private ImageButton scrollhide;
     private LinearLayout info;
@@ -36,54 +41,30 @@ public class SearchPageActivity extends AppCompatActivity {
     private double posX;
     private double posY;
 
-    //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
-    //声明定位回调监听器
-    public AMapLocationListener mLocationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (amapLocation != null) {
-                if (amapLocation.getErrorCode() == 0) {
-                //可在其中解析amapLocation获取相应内容。
-                    posX = amapLocation.getLongitude();
-                    posY = amapLocation.getLatitude();
-                    Log.d("",amapLocation.getLongitude() + " " + amapLocation.getLatitude());
-                }else {
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                    Log.e("AmapError","location Error, ErrCode:"
-                            + amapLocation.getErrorCode() + ", errInfo:"
-                            + amapLocation.getErrorInfo());
-                }
-            }
-        }
-    };
-    //声明AMapLocationClientOption对象
-    public AMapLocationClientOption mLocationOption = null;
+    private ArrayList<String> lotName = new ArrayList<>();
+    private ArrayList<Double> lotX = new ArrayList<>();
+    private ArrayList<Double> lotY = new ArrayList<>();
 
-    ArrayList<String> parkingLotName = new ArrayList<>();
-    ArrayList<Double> parkingLotX = new ArrayList<>();
-    ArrayList<Double> parkingLotY = new ArrayList<>();
-
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //hideNavigationBar(this);
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(mLocationListener);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setInterval(1000);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
+        Intent intent = getIntent();
+        posX = intent.getDoubleExtra("X", 0);
+        posY = intent.getDoubleExtra("Y", 0);
+        Log.d(TAG, "onCreate: " + posX + " " + posY);
+        lotName.add("停车场1号");
+        lotName.add("停车场2号");
+        lotX.add(114.0);
+        lotX.add(-122.0);
+        lotY.add(22.6);
+        lotY.add(37.4);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_page);
         scrollView = findViewById(R.id.search_page_scrollview);
         scrollhide = findViewById(R.id.search_page_scrollhide);
+        goback = findViewById(R.id.search_page_goback);
         scrollhide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,13 +74,43 @@ public class SearchPageActivity extends AppCompatActivity {
                 scrollhide.setY(height-scrollhide.getHeight());
             }
         });
-//        textView0 = findViewById(R.id.search_page_parkslot_info);
-//        textView0.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(SearchPageActivity.this, ParklotinfoPageActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                setResult(2, intent);
+                finish();
+            }
+        });
+
+        Log.d(TAG, String.valueOf(lotName.size()));
+
+        LinearLayout layout = findViewById(R.id.park_info);
+        for (int i = 0; i < lotName.size(); i++) {
+            if(lotX.get(i) - posX <= 0.1 && lotY.get(i) - posY <= 0.1){
+                TextView textView = new TextView(this);
+                textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 90));
+                textView.setBackgroundResource(R.drawable.textview_border);
+                textView.setTextSize(20);
+                textView.setTextColor(R.color.colorBlack);
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setText(lotName.get(i));
+                textView.setClickable(true);
+                int finalI = i;
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.putExtra("name", lotName.get(finalI));
+                        intent.putExtra("X", lotX.get(finalI));
+                        intent.putExtra("Y", lotY.get(finalI));
+                        setResult(1, intent);
+                        finish();
+                    }
+                });
+                layout.addView(textView);
+            }
+        }
+
     }
 }
